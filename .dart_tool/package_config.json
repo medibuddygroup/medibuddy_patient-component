@@ -128,13 +128,13 @@
       "languageVersion": "2.12"
     },
     {
-      "name": "medihere_ui",
+      "name": "medibuddy_ui_kit",
       "rootUri": "../",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     }
   ],
-  "generated": "2021-08-06T11:04:41.746850Z",
+  "generated": "2021-08-06T11:08:18.861671Z",
   "generator": "pub",
   "generatorVersion": "2.14.0-383.0.dev"
 }
