@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medihere_ui/constants/m_colors.dart';
+import 'package:medibuddy_ui_kit/medibuddy_ui_kit.dart';
 
 class MTextColors {
   static final Color primary = MColors.gray[900]!;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:medihere_ui/medibuddy_ui_kit.dart';
+import 'package:medibuddy_ui_kit/constants/button/m_button_enum.dart';
+import 'package:medibuddy_ui_kit/util/button_util.dart';
 
 class MOutlinedButton extends StatefulWidget {
   final ButtonSize size; // Button height.

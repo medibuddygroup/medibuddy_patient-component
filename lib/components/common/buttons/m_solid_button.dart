@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medihere_ui/medibuddy_ui_kit.dart';
+import 'package:medibuddy_ui_kit/medibuddy_ui_kit.dart';
 
 class MSolidButton extends StatefulWidget {
   final ButtonSize size; // Button height.
