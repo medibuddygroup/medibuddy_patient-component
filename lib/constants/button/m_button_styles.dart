@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medihere_ui/medihere_ui.dart';
+import 'package:medihere_ui/medibuddy_ui_kit.dart';
 
 class MButtonStyles {
   /// 버튼의 Color만 지정함, TextStyle까지 지정된 public 변수들을 사용하도록 하자.

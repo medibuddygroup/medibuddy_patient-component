@@ -1,5 +1,5 @@
 import 'package:medihere_ui/constants/constants.dart';
-import 'package:medihere_ui/medihere_ui.dart';
+import 'package:medihere_ui/medibuddy_ui_kit.dart';
 
 class ButtonUtil {
   static double sizeToLp(ButtonSize size) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medihere_ui/medihere_ui.dart';
+import 'package:medihere_ui/medibuddy_ui_kit.dart';
 
 class MHeader extends StatefulWidget {
   final Widget? leading;

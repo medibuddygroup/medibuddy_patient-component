@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:medihere_ui/medihere_ui.dart';
+import 'package:medihere_ui/medibuddy_ui_kit.dart';
 
 import '../../../constants/constants.dart';
 
