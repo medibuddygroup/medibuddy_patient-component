@@ -184,9 +184,12 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
             textAlign: TextAlign.left,
           ),
           InkWell(
-            onTap: widget.focusNode.hasFocus
-                ? null
-                : () => widget.focusNode.requestFocus(),
+            onHighlightChanged: _enableInkWell! ? _onHighlightChanged : null,
+            onTap:
+                _enableInkWell! ? () => widget.focusNode.requestFocus() : null,
+            // onTap: widget.focusNode.hasFocus
+            //     ? null
+            //     : () => widget.focusNode.requestFocus(),
             focusColor: Colors.white,
             hoverColor: Colors.white,
             highlightColor: Colors.white,
