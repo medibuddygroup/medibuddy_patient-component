@@ -21,6 +21,7 @@ class MTextFieldBorder extends StatefulWidget {
   final String? Function(String?) validator;
   final AutovalidateMode autovalidateMode;
   final void Function(String?) onSaved;
+  final Widget? suffixIcon;
 
   MTextFieldBorder._({
     Key? key,
@@ -39,6 +40,7 @@ class MTextFieldBorder extends StatefulWidget {
     required this.validator,
     this.autovalidateMode = AutovalidateMode.disabled,
     required this.onSaved,
+    this.suffixIcon,
   }) : super(key: key);
 
   factory MTextFieldBorder.vertical({
@@ -58,6 +60,7 @@ class MTextFieldBorder extends StatefulWidget {
     required String? Function(String?) validator,
     AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
     required Function(String?) onSaved,
+    Widget? suffixIcon,
   }) {
     return MTextFieldBorder._(
       key: key,
@@ -75,6 +78,7 @@ class MTextFieldBorder extends StatefulWidget {
       btnName: btnName,
       onSaved: onSaved,
       validator: validator,
+      suffixIcon: suffixIcon,
     );
   }
 
@@ -105,70 +109,70 @@ class MTextFieldBorder extends StatefulWidget {
 }
 
 class _MTextFieldBorderState extends State<MTextFieldBorder> {
-  Color? _borderColor;
-  BoxShadow? _boxShadow;
+  // Color? _borderColor;
+  // BoxShadow? _boxShadow;
 
-  bool? _showClearButton;
-  bool? _enableInkWell;
-  bool? _obscured;
+  // bool? _showClearButton;
+  // bool? _enableInkWell;
+  // bool? _obscured;
 
-  _onHighlightChanged(highlight) {
-    if (_notError()) {
-      if (highlight) {
-        setState(() {
-          _borderColor = MColors.blue[700];
-        });
-      } else {
-        if (widget.focusNode.hasFocus) {
-          setState(() {
-            _borderColor = MColors.blue[500];
-          });
-        } else {
-          setState(() {
-            _borderColor = MColors.controlBorder;
-          });
-        }
-      }
-    }
-  }
+  // _onHighlightChanged(highlight) {
+  //   if (_notError()) {
+  //     if (highlight) {
+  //       setState(() {
+  //         _borderColor = MColors.blue[700];
+  //       });
+  //     } else {
+  //       if (widget.focusNode.hasFocus) {
+  //         setState(() {
+  //           _borderColor = MColors.blue[500];
+  //         });
+  //       } else {
+  //         setState(() {
+  //           _borderColor = MColors.controlBorder;
+  //         });
+  //       }
+  //     }
+  //   }
+  // }
 
-  @override
-  void initState() {
-    super.initState();
-    _obscured = widget.obscure;
-    if (widget.status != TextFieldStatus.error) {
-      _borderColor = MColors.controlBorder;
-    } else {
-      _borderColor = MColors.red[700];
-    }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _obscured = widget.obscure;
+  //   if (widget.status != TextFieldStatus.error) {
+  //     _borderColor = MColors.controlBorder;
+  //   } else {
+  //     _borderColor = MColors.red[700];
+  //   }
 
-    _showClearButton = false;
-    _enableInkWell = true;
-    widget.focusNode.addListener(() {
-      if (widget.focusNode.hasFocus) {
-        setState(() {
-          _enableInkWell = false;
-          _boxShadow = BoxShadow(
-            blurRadius: 4,
-            spreadRadius: 1,
-            offset: Offset(0, 2),
-            color: MColors.gray[900]!.withOpacity(0.1),
-          );
-          if (widget.status != TextFieldStatus.error)
-            _borderColor = MColors.blue[500];
-          _showClearButton = true;
-        });
-      } else {
-        setState(() {
-          _enableInkWell = true;
-          _boxShadow = null;
-          if (widget.status != TextFieldStatus.error)
-            _borderColor = MColors.controlBorder;
-          _showClearButton = false;
-        });
-      }
-    });
-  }
+  //   _showClearButton = false;
+  //   _enableInkWell = true;
+  //   widget.focusNode.addListener(() {
+  //     if (widget.focusNode.hasFocus) {
+  //       setState(() {
+  //         _enableInkWell = false;
+  //         _boxShadow = BoxShadow(
+  //           blurRadius: 4,
+  //           spreadRadius: 1,
+  //           offset: Offset(0, 2),
+  //           color: MColors.gray[900]!.withOpacity(0.1),
+  //         );
+  //         if (widget.status != TextFieldStatus.error)
+  //           _borderColor = MColors.blue[500];
+  //         _showClearButton = true;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _enableInkWell = true;
+  //         _boxShadow = null;
+  //         if (widget.status != TextFieldStatus.error)
+  //           _borderColor = MColors.controlBorder;
+  //         _showClearButton = false;
+  //       });
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -184,12 +188,12 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
             textAlign: TextAlign.left,
           ),
           InkWell(
-            onHighlightChanged: _enableInkWell! ? _onHighlightChanged : null,
-            onTap:
-                _enableInkWell! ? () => widget.focusNode.requestFocus() : null,
-            // onTap: widget.focusNode.hasFocus
-            //     ? null
-            //     : () => widget.focusNode.requestFocus(),
+            // onHighlightChanged: _enableInkWell! ? _onHighlightChanged : null,
+            // onTap:
+            //     _enableInkWell! ? () => widget.focusNode.requestFocus() : null,
+            onTap: widget.focusNode.hasFocus
+                ? null
+                : () => widget.focusNode.requestFocus(),
             focusColor: Colors.white,
             hoverColor: Colors.white,
             highlightColor: Colors.white,
@@ -205,39 +209,41 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
                 style:
                     MTextStyles.bold[21]!.copyWith(color: MTextColors.primary),
                 decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.only(top: 4, bottom: 7, left: 4, right: 4),
-                    errorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: MColors.red[700]!),
+                  contentPadding:
+                      EdgeInsets.only(top: 4, bottom: 7, left: 4, right: 4),
+                  errorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: MColors.red[700]!),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MColors.gray[200]!,
                     ),
-                    enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: MColors.gray[200]!,
-                      ),
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MColors.blue[500]!,
                     ),
-                    focusedBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: MColors.blue[500]!,
-                      ),
+                  ),
+                  focusedErrorBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: MColors.red[700]!,
                     ),
-                    focusedErrorBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(
-                        color: MColors.red[700]!,
-                      ),
-                    ),
-                    hintStyle: MTextStyles.bold[21]!.copyWith(
-                      color: MColors.gray[100],
-                    ),
-                    hintText: widget.placeholder,
-                    suffixIcon: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      //mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        _buildClearButton(),
-                        _buildStatusIcon(),
-                        _buildObscureButton(),
-                      ],
-                    )),
+                  ),
+                  hintStyle: MTextStyles.bold[21]!.copyWith(
+                    color: MColors.gray[100],
+                  ),
+                  hintText: widget.placeholder,
+                  suffixIcon: widget.suffixIcon,
+                  // suffixIcon: Row(
+                  //   mainAxisSize: MainAxisSize.min,
+                  //   //mainAxisAlignment: MainAxisAlignment.end,
+                  //   children: [
+                  //     _buildClearButton(),
+                  //     _buildStatusIcon(),
+                  //     _buildObscureButton(),
+                  //   ],
+                  // )
+                ),
                 controller: widget.controller,
               ),
             ),
@@ -250,68 +256,69 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
     }
   }
 
-  _buildStatusIcon() {
-    switch (widget.status) {
-      case TextFieldStatus.normal:
-        return SizedBox.shrink();
-      case TextFieldStatus.success:
-        return MStatusIcon(
-          child: Image.asset(
-              'assets/icon/ic_CheckCircle_success_fill_green_24dp.png'),
-        );
-      case TextFieldStatus.error:
-        return MStatusIcon(
-          child: Image.asset('assets/icon/ic_WarningCircle_fill_red_24dp.png'),
-        );
-      default:
-        return SizedBox.shrink();
-    }
-  }
+  // _buildStatusIcon() {
+  //   switch (widget.status) {
+  //     case TextFieldStatus.normal:
+  //       return SizedBox.shrink();
+  //     case TextFieldStatus.success:
+  //       return MStatusIcon(
+  //         child: Image.asset(
+  //             'assets/icon/ic_CheckCircle_success_fill_green_24dp.png'),
+  //       );
+  //     case TextFieldStatus.error:
+  //       return MStatusIcon(
+  //         child:
+  //             Image.asset('assets/icon/ic_WarningCircle_fill_red_24dp@2x.png'),
+  //       );
+  //     default:
+  //       return SizedBox.shrink();
+  //   }
+  // }
 
-  _buildClearButton() {
-    if (_showClearButton!)
-      return MTextFieldTrailingButton.image(
-        onTap: () => widget.controller.clear(),
-        child: Image.asset(
-          'assets/images/ic_clear_24dp.png',
-        ),
-      );
-    else
-      return SizedBox.shrink();
-  }
+  // _buildClearButton() {
+  //   if (_showClearButton!)
+  //     return MTextFieldTrailingButton.image(
+  //       onTap: () => widget.controller.clear(),
+  //       child: Image.asset(
+  //         "assets/icon/ic_XCircle_clear_fill_gray_24dp@2x.png",
+  //       ),
+  //     );
+  //   else
+  //     return SizedBox.shrink();
+  // }
 
-  _buildObscureButton() {
-    if (widget.obscure != null)
-      return MTextFieldTrailingButton.image(
-        onTap: () {
-          setState(() {
-            _obscured = !_obscured!;
-          });
-        },
-        child: Icon(
-          _obscured!
-              ? Icons.visibility_off_outlined
-              : Icons.visibility_outlined,
-          size: 20,
-          color: MColors.gray[200],
-        ),
-      );
-    else
-      return SizedBox.shrink();
-  }
+  // _buildObscureButton() {
+  //   if (widget.obscure != null)
+  //     return MTextFieldTrailingButton.image(
+  //       onTap: () {
+  //         setState(() {
+  //           _obscured = !_obscured!;
+  //         });
+  //       },
+  //       child: Icon(
+  //         _obscured!
+  //             ? Icons.visibility_off_outlined
+  //             : Icons.visibility_outlined,
+  //         size: 20,
+  //         color: MColors.gray[200],
+  //       ),
+  //     );
+  //   else
+  //     return SizedBox.shrink();
+  // }
 
-  _buildBtnTextDefaultButton(
-      {String btn = '', required void Function() onTap}) {
-    return MTextFieldTrailingButton.text(
-      child: Text(
-        btn,
-        style: MTextStyles.bold[16]!.copyWith(
-          color: MColors.blue[800],
-        ),
-      ),
-      onTap: onTap,
-    );
-  }
+  // _buildBtnTextDefaultButton(
+  //     {String btn = '', required void Function() onTap}) {
+  //   return MTextFieldTrailingButton.text(
+  //     child: Text(
+  //       btn,
+  //       style: MTextStyles.bold[16]!.copyWith(
+  //         color: MColors.blue[800],
+  //       ),
+  //     ),
+  //     onTap: onTap,
+  //   );
+  // }
 
-  _notError() => widget.status != TextFieldStatus.error;
+  //_notError() => widget.status != TextFieldStatus.error;
 }
