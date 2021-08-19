@@ -14,7 +14,7 @@ class MTextFieldBorder extends StatefulWidget {
   final TextFieldStatus? status;
   final String? error;
   final String btnName;
-  final bool? obscure;
+  final bool obscure;
   final bool enabled;
   final void Function()? onEditingCompleted;
   final void Function(String)? onChanged;
@@ -32,7 +32,7 @@ class MTextFieldBorder extends StatefulWidget {
       this.enabled = true,
       this.error,
       required this.controller,
-      this.obscure,
+      this.obscure = false,
       this.btnName = '',
       required this.direction})
       : super(key: key);
@@ -47,7 +47,7 @@ class MTextFieldBorder extends StatefulWidget {
     Function()? onEditingCompleted,
     Function(String)? onChanged,
     Function()? onSubmitted,
-    bool? obscure,
+    bool obscure = false,
     bool enabled = true,
     String? error,
     String btnName = '',
@@ -181,6 +181,7 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
             child: AbsorbPointer(
               absorbing: !widget.focusNode.hasFocus,
               child: TextField(
+                obscureText: widget.obscure,
                 focusNode: widget.focusNode,
                 style:
                     MTextStyles.bold[21]!.copyWith(color: MTextColors.primary),
@@ -213,11 +214,9 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        _buildClearButton(),
-                        _buildStatusIcon(),
                         _buildObscureButton(),
-                        _buildBtnTextDefaultButton(
-                            btn: widget.btnName, onTap: () {}),
+                        _buildStatusIcon(),
+                        _buildClearButton(),
                       ],
                     )),
                 controller: widget.controller,

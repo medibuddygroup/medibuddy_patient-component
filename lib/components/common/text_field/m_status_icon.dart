@@ -13,12 +13,11 @@ class MStatusIcon extends StatefulWidget {
 class _MStatusIconState extends State<MStatusIcon> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 32,
-      height: 46,
+    return Padding(
+      padding: const EdgeInsets.only(right: 16, bottom: 12),
       child: SizedBox(
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         child: widget.child,
       ),
     );
