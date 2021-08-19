@@ -12,30 +12,34 @@ class MTextFieldBorder extends StatefulWidget {
   final String label;
   final String placeholder;
   final TextFieldStatus? status;
-  final String? error;
   final String btnName;
   final bool obscure;
   final bool enabled;
   final void Function()? onEditingCompleted;
   final void Function(String)? onChanged;
   final void Function()? onSubmitted;
+  final String? Function(String?) validator;
+  final AutovalidateMode autovalidateMode;
+  final void Function(String?) onSaved;
 
-  MTextFieldBorder._(
-      {Key? key,
-      required this.focusNode,
-      this.onEditingCompleted,
-      this.onSubmitted,
-      this.onChanged,
-      required this.label,
-      required this.placeholder,
-      this.status = TextFieldStatus.normal,
-      this.enabled = true,
-      this.error,
-      required this.controller,
-      this.obscure = false,
-      this.btnName = '',
-      required this.direction})
-      : super(key: key);
+  MTextFieldBorder._({
+    Key? key,
+    required this.focusNode,
+    this.onEditingCompleted,
+    this.onSubmitted,
+    this.onChanged,
+    required this.label,
+    required this.placeholder,
+    this.status = TextFieldStatus.normal,
+    this.enabled = true,
+    required this.controller,
+    this.obscure = false,
+    this.btnName = '',
+    required this.direction,
+    required this.validator,
+    this.autovalidateMode = AutovalidateMode.disabled,
+    required this.onSaved,
+  }) : super(key: key);
 
   factory MTextFieldBorder.vertical({
     Key? key,
@@ -51,6 +55,9 @@ class MTextFieldBorder extends StatefulWidget {
     bool enabled = true,
     String? error,
     String btnName = '',
+    required String? Function(String?) validator,
+    AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
+    required Function(String?) onSaved,
   }) {
     return MTextFieldBorder._(
       key: key,
@@ -65,8 +72,9 @@ class MTextFieldBorder extends StatefulWidget {
       onSubmitted: onSubmitted,
       obscure: obscure,
       enabled: enabled,
-      error: error,
       btnName: btnName,
+      onSaved: onSaved,
+      validator: validator,
     );
   }
 
@@ -76,6 +84,9 @@ class MTextFieldBorder extends StatefulWidget {
     required String label,
     required String placeholder,
     required FocusNode focusNode,
+    required String? Function(String?) validator,
+    AutovalidateMode autovalidateMode = AutovalidateMode.disabled,
+    required Function(String?) onSaved,
   }) {
     return MTextFieldBorder._(
       key: key,
@@ -84,6 +95,8 @@ class MTextFieldBorder extends StatefulWidget {
       placeholder: placeholder,
       direction: TextFieldDirection.horizontal,
       focusNode: focusNode,
+      onSaved: onSaved,
+      validator: validator,
     );
   }
 
@@ -122,7 +135,7 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
   @override
   void initState() {
     super.initState();
-    _obscured = widget.obscure ?? false;
+    _obscured = widget.obscure;
     if (widget.status != TextFieldStatus.error) {
       _borderColor = MColors.controlBorder;
     } else {
@@ -180,7 +193,10 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
             splashColor: Colors.black.withAlpha(25),
             child: AbsorbPointer(
               absorbing: !widget.focusNode.hasFocus,
-              child: TextField(
+              child: TextFormField(
+                validator: widget.validator,
+                autovalidateMode: widget.autovalidateMode,
+                onSaved: widget.onSaved,
                 obscureText: widget.obscure,
                 focusNode: widget.focusNode,
                 style:
@@ -212,11 +228,11 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
                     hintText: widget.placeholder,
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.end,
+                      //mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        _buildObscureButton(),
-                        _buildStatusIcon(),
                         _buildClearButton(),
+                        _buildStatusIcon(),
+                        _buildObscureButton(),
                       ],
                     )),
                 controller: widget.controller,
@@ -237,11 +253,12 @@ class _MTextFieldBorderState extends State<MTextFieldBorder> {
         return SizedBox.shrink();
       case TextFieldStatus.success:
         return MStatusIcon(
-          child: Image.asset('assets/images/ic_check_24dp.png'),
+          child: Image.asset(
+              'assets/icon/ic_CheckCircle_success_fill_green_24dp.png'),
         );
       case TextFieldStatus.error:
         return MStatusIcon(
-          child: Image.asset('assets/images//ic_error_24dp.png'),
+          child: Image.asset('assets/icon/ic_WarningCircle_fill_red_24dp.png'),
         );
       default:
         return SizedBox.shrink();
