@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
 class MColors {
+  /// gray Color HEX Code Changed. (22.08.05)
   static const gray = MaterialColor(
     0xFF969BA0,
     {
       40: const Color(0xFFF0F5FA),
       60: const Color(0xFFEBF0F5),
       80: const Color(0xFFE6EBF0),
-      100: const Color(0xFFCAD1D7),
-      200: const Color(0xFFBBC5CC),
-      300: const Color(0xFFACB8C1),
-      400: const Color(0xFF939EA7),
-      500: const Color(0xFF7B858C),
-      600: const Color(0xFF626B72),
-      700: const Color(0xFF495158),
-      800: const Color(0xFF31383D),
-      900: const Color(0xFF181E23),
+      100: const Color(0xFFE1E6EB),
+      200: const Color(0xFFC8CDD2),
+      300: const Color(0xFFAFB4B9),
+      400: const Color(0xFF969BA0),
+      500: const Color(0xFF7D8287),
+      600: const Color(0xFF64696E),
+      700: const Color(0xFF4B5055),
+      800: const Color(0xFF32373C),
+      900: const Color(0xFF191E23),
     },
   );
 
