@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:medibuddy_ui_kit/constants/icon/m_icon_enum.dart';
 
 class MIcon extends StatelessWidget {
   final IconData icon;
-  final double size;
+  final double? size;
   final Color? color;
+  final IconType? type;
 
   const MIcon._({
     Key? key,
     required this.icon,
-    required this.size,
+    this.size,
     this.color = Colors.black,
+    this.type,
   }) : super(key: key);
 
   factory MIcon.bold({
@@ -19,8 +22,8 @@ class MIcon extends StatelessWidget {
   }) {
     return MIcon._(
       icon: icon,
-      size: 16,
       color: color,
+      type: IconType.bold,
     );
   }
 
@@ -31,8 +34,8 @@ class MIcon extends StatelessWidget {
   }) {
     return MIcon._(
       icon: icon,
-      size: 24,
       color: color,
+      type: IconType.regular,
     );
   }
 
@@ -43,7 +46,20 @@ class MIcon extends StatelessWidget {
   }) {
     return MIcon._(
       icon: icon,
-      size: 32,
+      color: color,
+      type: IconType.light,
+    );
+  }
+
+  factory MIcon({
+    Key? key,
+    required icon,
+    required double size,
+    Color? color,
+  }) {
+    return MIcon._(
+      icon: icon,
+      size: size,
       color: color,
     );
   }
@@ -52,7 +68,7 @@ class MIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Icon(
       icon,
-      size: size,
+      size: size ?? iconSizeFromType[type],
       color: color,
     );
   }
