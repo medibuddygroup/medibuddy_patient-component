@@ -5,11 +5,11 @@ import 'package:medibuddy_ui_kit/constants/text/m_text_styles.dart';
 
 class ButtonUtil {
 
-  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonColor color) {
+  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonColor color, {required bool isDisabled}) {
     switch(type) {
       case ButtonType.outlined:
         return BoxDecoration(
-          border: Border.all(color: _buttonBorderColorByColor(color)),
+          border: Border.all(color: _buttonBorderColorByColor(color, isDisabled)),
           borderRadius: BorderRadius.circular(8),
         );
       case ButtonType.singleDialogButton:
@@ -40,37 +40,37 @@ class ButtonUtil {
     }
   }
 
-  TextStyle? buttonTextStyleByButtonProperties(ButtonType type, ButtonSize size, ButtonColor color) {
+  TextStyle? buttonTextStyleByButtonProperties(ButtonType type, ButtonSize size, ButtonColor color, {required bool isDisabled}) {
     switch(size) {
       case ButtonSize.xl:
         return type == ButtonType.solid
             ? MTextStyles.black[21]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
-            ? MTextStyles.bold[21]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color))
+            ? MTextStyles.bold[21]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
             : MTextStyles.bold[21]!.copyWith(color: MColors.gray[600]!);
       case ButtonSize.l:
         return type == ButtonType.solid
             ? MTextStyles.black[18]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
-            ? MTextStyles.bold[18]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color))
+            ? MTextStyles.bold[18]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
             : MTextStyles.bold[18]!.copyWith(color: MColors.gray[600]!);
       case ButtonSize.m:
         return type == ButtonType.solid
             ? MTextStyles.black[16]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
-            ? MTextStyles.bold[16]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color))
+            ? MTextStyles.bold[16]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
             : MTextStyles.bold[16]!.copyWith(color: MColors.gray[600]!);
       case ButtonSize.s:
         return type == ButtonType.solid
             ? MTextStyles.black[14]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
-            ? MTextStyles.bold[14]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color))
+            ? MTextStyles.bold[14]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
             : MTextStyles.bold[14]!.copyWith(color: MColors.gray[600]!);
       case ButtonSize.xs:
         return type == ButtonType.solid
             ? MTextStyles.black[12]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
-            ? MTextStyles.bold[12]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color))
+            ? MTextStyles.bold[12]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
             : MTextStyles.bold[12]!.copyWith(color: MColors.gray[600]!);
     }
   }
@@ -161,15 +161,17 @@ class ButtonUtil {
     }
   }
 
-  Color? _buttonTextColorByTypeAndColor(ButtonType type, ButtonColor color) {
+  Color? _buttonTextColorByTypeAndColor(ButtonType type, ButtonColor color, bool isDisabled) {
     switch(type) {
       case ButtonType.outlined:
       case ButtonType.text:
-        return color == ButtonColor.blue
-            ? MColors.blue[800]!
-            : color == ButtonColor.red
-            ? MColors.red[600]!
-            : MColors.gray[600]!;
+        if(isDisabled) return MColors.gray[80]!;
+        else
+          return color == ButtonColor.blue
+              ? MColors.blue[800]!
+              : color == ButtonColor.red
+              ? MColors.red[600]!
+              : MColors.gray[600]!;
       case ButtonType.solid:
         return Colors.white;
       default:
@@ -177,14 +179,16 @@ class ButtonUtil {
     }
   }
 
-  Color _buttonBorderColorByColor(ButtonColor color) {
-    switch(color) {
-      case ButtonColor.blue:
-        return MColors.blue[800]!;
-      case ButtonColor.red:
-        return MColors.red[600]!;
-      case ButtonColor.gray:
-        return MColors.gray[600]!;
-    }
+  Color _buttonBorderColorByColor(ButtonColor color, bool isDisabled) {
+    if(isDisabled) return MColors.gray[80]!;
+    else
+      switch(color) {
+        case ButtonColor.blue:
+          return MColors.blue[800]!;
+        case ButtonColor.red:
+          return MColors.red[600]!;
+        case ButtonColor.gray:
+          return MColors.gray[600]!;
+      }
   }
 }

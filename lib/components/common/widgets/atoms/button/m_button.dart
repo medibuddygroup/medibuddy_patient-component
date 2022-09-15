@@ -168,16 +168,16 @@ class MButton extends StatelessWidget with ButtonUtil {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
+      width: width ?? double.infinity,
       height: buttonHeightFromSize[size],
       margin: margin,
-      decoration: buttonDecorationByTypeAndColor(type, buttonColor),
+      decoration: buttonDecorationByTypeAndColor(type, buttonColor, isDisabled: onPressed == null ? true : false),
       child: TextButton(
         style: buttonStyleBySizeAndColor(type, size, buttonColor),
         onPressed: onPressed,
         child: Text(
           text,
-          style: buttonTextStyleByButtonProperties(type, size, buttonColor),
+          style: buttonTextStyleByButtonProperties(type, size, buttonColor, isDisabled: onPressed == null ? true : false),
           textAlign: TextAlign.center,
         ),
       ),
