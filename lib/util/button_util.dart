@@ -15,10 +15,10 @@ class ButtonUtil {
       case ButtonType.singleDialogButton:
         return BoxDecoration(
           border: Border(top: BorderSide(color: MColors.gray[80]!)),
-          borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(8),
-            bottomLeft: Radius.circular(8)
-          ),
+          // borderRadius: BorderRadius.only(
+          //   bottomRight: Radius.circular(8),
+          //   bottomLeft: Radius.circular(8)
+          // ),
         );
       case ButtonType.leftDialogButton:
         return BoxDecoration(
@@ -26,12 +26,12 @@ class ButtonUtil {
             top: BorderSide(color: MColors.gray[80]!),
             right: BorderSide(color: MColors.gray[80]!),
           ),
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
+          // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
         );
       case ButtonType.rightDialogButton:
         return BoxDecoration(
           border: Border(top: BorderSide(color: MColors.gray[80]!)),
-          borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
+          // borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
         );
       case ButtonType.solid:
       case ButtonType.text:
@@ -81,7 +81,7 @@ class ButtonUtil {
       backgroundColor: MaterialStateProperty.resolveWith((states) => _buttonBackgroundColorByTypeAndColor(states, type, color)),
       overlayColor: MaterialStateProperty.all(_buttonSelectedColorByTypeAndColor(type, color)),
       shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(8),)
+          RoundedRectangleBorder(borderRadius: _buttonBorderRadiusByType(type))
       ),
       /// 아래는 추후 쓰일 수 있음.
       // elevation: MaterialStateProperty.resolveWith((states) => 6),
@@ -158,6 +158,25 @@ class ButtonUtil {
       case ButtonType.text:
       default:
         return Colors.transparent;
+    }
+  }
+
+  BorderRadiusGeometry _buttonBorderRadiusByType(ButtonType type) {
+    switch(type) {
+      case ButtonType.singleDialogButton:
+        return BorderRadius.only(
+          bottomRight: Radius.circular(8),
+          bottomLeft: Radius.circular(8)
+        );
+      case ButtonType.leftDialogButton:
+        return BorderRadius.only(bottomLeft: Radius.circular(8));
+      case ButtonType.rightDialogButton:
+        return BorderRadius.only(bottomRight: Radius.circular(8));
+      case ButtonType.solid:
+      case ButtonType.outlined:
+      case ButtonType.text:
+      default:
+        return BorderRadius.circular(8);
     }
   }
 
