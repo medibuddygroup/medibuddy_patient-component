@@ -15,56 +15,53 @@ class MDialog extends StatefulWidget {
   factory MDialog.loading({Key? key}) {
     return MDialog._(
       contents: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Center(
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 32),
-                width: 40,
-                height: 40,
-                child: CircularProgressIndicator(),
-              ),
-            )
-          ]
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 32),
+              width: 40,
+              height: 40,
+              child: CircularProgressIndicator(),
+            ),
+          )
+        ]
       ),
     );
   }
 
   factory MDialog.alert({
     Key? key,
-    required String alertText,
-    required TextStyle alertTextStyle,
+    required String contentText,
+    required TextStyle contentTextStyle,
     required String buttonText,
-    required Function()? onPressButton,
-    BorderRadiusGeometry? buttonBorderRadius,
-    ButtonSize? buttonSize,
-    TextStyle? buttonTextStyle,
-    Color? buttonBackgroundColor,
-    Color? buttonSelectedColor,
+    required ButtonSize buttonSize,
+    required ButtonColor buttonColor,
     double? dialogRadius,
+    Function()? onPressButton,
   }) {
     return MDialog._(
-        dialogRadius: dialogRadius,
-        contents: Column(
-            children: [
-              Padding(
-                  padding: const EdgeInsets.only(top: 24, bottom: 24),
-                  child: Center(
-                    child: Text(
-                      alertText,
-                      style: alertTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
+      dialogRadius: dialogRadius,
+      contents: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 24, bottom: 24),
+            child: Center(
+              child: Text(
+                contentText,
+                style: contentTextStyle,
+                textAlign: TextAlign.center,
               ),
-              MButton.singleDialogButton(
-                text: buttonText,
-                size: buttonSize ?? ButtonSize.l,
-                buttonColor: ButtonColor.gray,
-                onPressed: onPressButton,
-              ),
-            ]
-        )
+            )
+          ),
+          MButton.singleDialogButton(
+            text: buttonText,
+            size: buttonSize,
+            buttonColor: buttonColor,
+            onPressed: onPressButton,
+          ),
+        ]
+      )
     );
   }
 
@@ -73,63 +70,51 @@ class MDialog extends StatefulWidget {
     required Widget contents,
     required String leftButtonText,
     required String rightButtonText,
+    required ButtonSize buttonSize,
+    required ButtonColor leftButtonColor,
+    required ButtonColor rightButtonColor,
     required Function() onPressLeftButton,
     required Function() onPressRightButton,
     double? dialogBorderRadius,
-    ButtonSize? buttonSize,
     EdgeInsets? contentsPadding,
-    TextStyle? leftButtonTextStyle,
-    TextStyle? rightButtonTextStyle,
-    Color? leftButtonBackgroundColor,
-    Color? rightButtonBackgroundColor,
-    Color? leftButtonSelectedColor,
-    Color? rightButtonSelectedColor,
   }) {
     return MDialog._(
-        dialogRadius: dialogBorderRadius,
-        contents: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: contentsPadding ?? const EdgeInsets.all(16),
-              child: contents,
-            ),
-            Row(
-              children: [
-                Flexible(
-                  fit: FlexFit.loose,
-                  flex: 1,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: MColors.gray[80]!),
-                            right: BorderSide(color: MColors.gray[80]!)
-                        )
-                    ),
-                    child: MButton.text(
-                      text: leftButtonText,
-                      size: buttonSize ?? ButtonSize.m,
-                      buttonColor: ButtonColor.gray,
-                      onPressed: onPressLeftButton,
-                    ),
-                  ),
+      dialogRadius: dialogBorderRadius,
+      contents: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: contentsPadding ?? const EdgeInsets.all(16),
+            child: contents,
+          ),
+          Row(
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: MButton.leftDialogButton(
+                  text: leftButtonText,
+                  size: buttonSize,
+                  buttonColor: leftButtonColor,
+                  onPressed: onPressLeftButton,
                 ),
-                Flexible(
-                  fit: FlexFit.loose,
-                  flex: 1,
-                  child: MButton.rightDialogButton(
-                    text: rightButtonText,
-                    size: buttonSize ?? ButtonSize.l,
-                    buttonColor: ButtonColor.gray,
-                    onPressed: onPressRightButton,
-                  ),
+              ),
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 1,
+                child: MButton.rightDialogButton(
+                  text: rightButtonText,
+                  size: buttonSize,
+                  buttonColor: rightButtonColor,
+                  onPressed: onPressRightButton,
                 ),
-              ],
-            )
-          ],
-        )
+              ),
+            ],
+          )
+        ],
+      )
     );
   }
 
@@ -155,9 +140,7 @@ class _MDialogState extends State<MDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Dialog(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(widget.dialogRadius!)
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(widget.dialogRadius!)),
           backgroundColor: Colors.white,
           insetPadding: EdgeInsets.symmetric(horizontal: 32), /// 다이얼로그 바깥 마진
           child: SingleChildScrollView(
