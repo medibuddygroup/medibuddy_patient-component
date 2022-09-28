@@ -1,2 +1,2 @@
-export './m_badge.dart';
-export './m_dot_badge.dart';
+export './badge.dart';
+export './dot_badge.dart';

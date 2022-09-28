@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:medibuddy_ui_kit/constants/m_colors.dart';
 import 'package:medibuddy_ui_kit/constants/text/m_text_styles.dart';
 
-class MBadge extends StatelessWidget {
+class Badge extends StatelessWidget {
   final double? height;
   final String status;
   final bool isHospital;
   final Color backgroundColor;
   final Color textColor;
 
-  const MBadge._({
+  const Badge._({
     Key? key,
     required this.status,
     required this.isHospital,
@@ -19,10 +19,10 @@ class MBadge extends StatelessWidget {
   }) : super(key: key);
 
 
-  factory MBadge.open({
+  factory Badge.open({
     required bool isHospital,
   }) {
-    return MBadge._(
+    return Badge._(
       status: isHospital ? '진료 중' : '영업 중',
       isHospital: isHospital,
       backgroundColor: MColors.blue[50]!,
@@ -30,10 +30,10 @@ class MBadge extends StatelessWidget {
     );
   }
 
-  factory MBadge.closed({
+  factory Badge.closed({
     required bool isHospital,
   }) {
-    return MBadge._(
+    return Badge._(
       status: isHospital ? '진료 종료' : '영업 종료',
       isHospital: isHospital,
       backgroundColor: MColors.gray[60]!,
@@ -41,10 +41,10 @@ class MBadge extends StatelessWidget {
     );
   }
 
-  factory MBadge.lunch({
+  factory Badge.lunch({
     required bool isHospital,
   }) {
-    return MBadge._(
+    return Badge._(
       status: '점심 시간',
       isHospital: isHospital,
       backgroundColor: MColors.gray[60]!,
@@ -52,10 +52,10 @@ class MBadge extends StatelessWidget {
     );
   }
 
-  factory MBadge.inStock({
+  factory Badge.inStock({
     required bool isHospital,
   }) {
-    return MBadge._(
+    return Badge._(
       status: '재고 있음',
       isHospital: isHospital,
       backgroundColor: MColors.green[50]!,
@@ -63,10 +63,10 @@ class MBadge extends StatelessWidget {
     );
   }
 
-  factory MBadge.noStock({
+  factory Badge.noStock({
     required bool isHospital,
   }) {
-    return MBadge._(
+    return Badge._(
       status: '재고 없음',
       isHospital: isHospital,
       backgroundColor: MColors.red[50]!,
