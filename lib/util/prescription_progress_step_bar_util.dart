@@ -112,7 +112,8 @@ class PrescriptionProgressStepBarUtil {
     };
 
     colorsAndStepValue['stepLabel']!.keys.forEach((element) {
-      if(element == stepToDouble)
+      double statusRangeValue = stepToDouble - element;
+      if((-unitValue <= statusRangeValue) && (statusRangeValue <= unitValue))
         colorsAndStepValue['stepLabel']![element] = enabledLabelTextColor;
       else
         colorsAndStepValue['stepLabel']![element] = disabledLabelTextColor;

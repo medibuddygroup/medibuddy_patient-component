@@ -39,6 +39,8 @@ const Map<String, double> prescriptionLabelPosition = {
   '약 받기': 0.875,
 };
 
+const double unitValue = 0.125;
+
 // const Map<PrescriptionStep, double> prescriptionStepToDouble = {
 //   PrescriptionStep.applyPrescription : 0.125,
 //   PrescriptionStep.appointmentTreatment : 0.25,
