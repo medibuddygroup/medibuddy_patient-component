@@ -85,8 +85,8 @@ class PrescriptionProgressStepBarUtil {
     required bool isPrescriptionIssued
   }) {
     PrescriptionStep prescriptionStep = prescriptionStepByState[stepValueToString]!;
-    // double stepToDouble = double.parse(stepValueToString);
     double stepToDouble = stepValueByPrescriptionStep(step: prescriptionStep, isPrescriptionIssued: isPrescriptionIssued);
+    double progressBarValue = _regulateProgressBarValue(valueToString: stepToDouble.toString());
 
     Map<String, dynamic> colorsAndStepValue = {
       'stepLabel': {
@@ -108,7 +108,7 @@ class PrescriptionProgressStepBarUtil {
         0.75: disabledHalfStepCircleColor,
         1: disabledHalfStepCircleColor,
       },
-      'stepToDouble' : stepToDouble,
+      'progressBarValue' : progressBarValue,
     };
 
     for (double key in (colorsAndStepValue['stepLabel']!.keys)) {
@@ -118,16 +118,6 @@ class PrescriptionProgressStepBarUtil {
         break;
       }
     }
-
-    // colorsAndStepValue['stepLabel']!.keys.forEach((element) {
-    //   double statusRangeValue = stepToDouble - element;
-    //   if((-unitValue <= statusRangeValue) && (statusRangeValue <= unitValue)) {
-    //     colorsAndStepValue['stepLabel']![element] = enabledLabelTextColor;
-    //     return;
-    //   }
-    //   else
-    //     colorsAndStepValue['stepLabel']![element] = disabledLabelTextColor;
-    // });
 
     colorsAndStepValue['mainStepCircle']!.keys.forEach((element) {
       if(element <= stepToDouble)
@@ -143,5 +133,20 @@ class PrescriptionProgressStepBarUtil {
     });
 
     return colorsAndStepValue;
+  }
+
+  double _regulateProgressBarValue({required String valueToString}) {
+    double regulatedValue = double.parse(valueToString);
+
+    switch(valueToString) {
+      case "0.375":
+      case "0.625":
+      case "0.875":
+        regulatedValue += 0.01;
+        break;
+      default:
+        break;
+    }
+    return regulatedValue;
   }
 }

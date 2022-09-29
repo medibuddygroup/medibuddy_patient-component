@@ -59,7 +59,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
                       minHeight: 8,
                       valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
                       backgroundColor: Colors.transparent,
-                      value: colorsAndStepValue['stepToDouble'],
+                      value: colorsAndStepValue['progressBarValue'],
                     ),
                     Positioned.fill(
                       top: -24,
