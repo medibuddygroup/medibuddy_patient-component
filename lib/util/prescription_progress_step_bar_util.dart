@@ -111,15 +111,24 @@ class PrescriptionProgressStepBarUtil {
       'stepToDouble' : stepToDouble,
     };
 
-    colorsAndStepValue['stepLabel']!.keys.forEach((element) {
-      double statusRangeValue = stepToDouble - element;
+    for (double key in (colorsAndStepValue['stepLabel']!.keys)) {
+      double statusRangeValue = stepToDouble - key;
       if((-unitValue <= statusRangeValue) && (statusRangeValue <= unitValue)) {
-        colorsAndStepValue['stepLabel']![element] = enabledLabelTextColor;
-        return;
+        colorsAndStepValue['stepLabel']![key] = enabledLabelTextColor;
+        break;
       }
-      else
-        colorsAndStepValue['stepLabel']![element] = disabledLabelTextColor;
-    });
+    }
+
+    // colorsAndStepValue['stepLabel']!.keys.forEach((element) {
+    //   double statusRangeValue = stepToDouble - element;
+    //   if((-unitValue <= statusRangeValue) && (statusRangeValue <= unitValue)) {
+    //     colorsAndStepValue['stepLabel']![element] = enabledLabelTextColor;
+    //     return;
+    //   }
+    //   else
+    //     colorsAndStepValue['stepLabel']![element] = disabledLabelTextColor;
+    // });
+
     colorsAndStepValue['mainStepCircle']!.keys.forEach((element) {
       if(element <= stepToDouble)
         colorsAndStepValue['mainStepCircle']![element] = enabledMainStepCircleColor;
