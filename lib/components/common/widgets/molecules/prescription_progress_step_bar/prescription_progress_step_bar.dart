@@ -20,13 +20,13 @@ class PrescriptionProgressStepBar extends StatefulWidget {
 
 class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBar> with PrescriptionProgressStepBarUtil {
 
-  Map<String, Map<double, Color>> colors = {};
+  Map<String, dynamic> colorsAndStepValue = {};
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    colors = setColorsByStepValue(
+    colorsAndStepValue = setColorsAndStepValue(
       stepValueToString: widget.step,
       isPrescriptionIssued: widget.isPrescriptionIssued,
     );
@@ -59,7 +59,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
                       minHeight: 8,
                       valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
                       backgroundColor: Colors.transparent,
-                      value: 0.125,
+                      value: colorsAndStepValue['stepToDouble'],
                     ),
                     Positioned.fill(
                       top: -24,
@@ -91,7 +91,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildProgressLabel(labelText: labelText,),
-        _buildCircleDot(color: colors['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
+        _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
       ],
     );
   }
@@ -101,7 +101,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         for(double i=0; i <= 1.0; i+=0.25)
-          _buildCircleDot(color: colors['halfStepCircle']![i]!),
+          _buildCircleDot(color: colorsAndStepValue['halfStepCircle']![i]!),
       ],
     );
   }
@@ -122,7 +122,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
     return Text(
       labelText,
       style: MTextStyles.bold[14]!.copyWith(
-        color: colors['stepLabel']![prescriptionLabelPosition[labelText]],
+        color: colorsAndStepValue['stepLabel']![prescriptionLabelPosition[labelText]],
       ),
       // textAlign: TextAlign.center,
     );

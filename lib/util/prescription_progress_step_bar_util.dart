@@ -80,7 +80,7 @@ class PrescriptionProgressStepBarUtil {
   //   return colors;
   // }
 
-  Map<String, Map<double, Color>> setColorsByStepValue({
+  Map<String, dynamic> setColorsAndStepValue({
     required String stepValueToString,
     required bool isPrescriptionIssued
   }) {
@@ -88,7 +88,7 @@ class PrescriptionProgressStepBarUtil {
     // double stepToDouble = double.parse(stepValueToString);
     double stepToDouble = stepValueByPrescriptionStep(step: prescriptionStep, isPrescriptionIssued: isPrescriptionIssued);
 
-    Map<String, Map<double, Color>> colors = {
+    Map<String, dynamic> colorsAndStepValue = {
       'stepLabel': {
         0.125: disabledLabelTextColor,
         0.375: disabledLabelTextColor,
@@ -108,27 +108,28 @@ class PrescriptionProgressStepBarUtil {
         0.75: disabledHalfStepCircleColor,
         1: disabledHalfStepCircleColor,
       },
+      'stepToDouble' : stepToDouble,
     };
 
-    colors['stepLabel']!.keys.forEach((element) {
+    colorsAndStepValue['stepLabel']!.keys.forEach((element) {
       if(element == stepToDouble)
-        colors['stepLabel']![element] = enabledLabelTextColor;
+        colorsAndStepValue['stepLabel']![element] = enabledLabelTextColor;
       else
-        colors['stepLabel']![element] = disabledLabelTextColor;
+        colorsAndStepValue['stepLabel']![element] = disabledLabelTextColor;
     });
-    colors['mainStepCircle']!.keys.forEach((element) {
+    colorsAndStepValue['mainStepCircle']!.keys.forEach((element) {
       if(element <= stepToDouble)
-        colors['mainStepCircle']![element] = enabledMainStepCircleColor;
+        colorsAndStepValue['mainStepCircle']![element] = enabledMainStepCircleColor;
       else
-        colors['mainStepCircle']![element] = disabledMainStepCircleColor;
+        colorsAndStepValue['mainStepCircle']![element] = disabledMainStepCircleColor;
     });
-    colors['halfStepCircle']!.keys.forEach((element) {
+    colorsAndStepValue['halfStepCircle']!.keys.forEach((element) {
       if(element <= stepToDouble)
-        colors['halfStepCircle']![element] = enabledHalfStepCircleColor;
+        colorsAndStepValue['halfStepCircle']![element] = enabledHalfStepCircleColor;
       else
-        colors['halfStepCircle']![element] = disabledHalfStepCircleColor;
+        colorsAndStepValue['halfStepCircle']![element] = disabledHalfStepCircleColor;
     });
 
-    return colors;
+    return colorsAndStepValue;
   }
 }
