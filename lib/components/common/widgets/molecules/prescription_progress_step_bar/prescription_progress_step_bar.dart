@@ -63,7 +63,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
                     ),
                     Positioned.fill(
                       top: -24,
-                      child: _buildMainStepCircles(),
+                      child: _buildMainSteps(),
                     ),
                   ]
               ),
@@ -74,24 +74,45 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
     );
   }
 
-  Row _buildMainStepCircles() {
+  Row _buildMainSteps() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _buildStep(labelText: "진료접수"),
-        _buildStep(labelText: "병원진료"),
-        _buildStep(labelText: "조제접수"),
-        _buildStep(labelText: "약 받기"),
+        _buildMainStep(labelText: "진료접수"),
+        _buildMainStep(labelText: "병원진료"),
+        _buildMainStep(labelText: "조제접수"),
+        _buildMainStep(labelText: "약 받기"),
       ],
     );
   }
 
-  Column _buildStep({required String labelText}) {
+  _buildMainStepCircle({required Color color}) {
+    return Container(     /// outer Circle
+      alignment: Alignment.center,
+      width: 16,
+      height: 16,
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Container(     /// inner Circle
+        width: 12,
+        height: 12,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(999),
+        ),
+      ),
+    );
+  }
+
+  Column _buildMainStep({required String labelText}) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _buildProgressLabel(labelText: labelText,),
-        _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
+        // _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
+        _buildMainStepCircle(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
       ],
     );
   }
