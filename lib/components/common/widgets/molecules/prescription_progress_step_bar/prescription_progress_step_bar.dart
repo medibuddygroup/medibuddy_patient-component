@@ -57,57 +57,24 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
     return Container(
       width: double.infinity,
       alignment: Alignment.bottomCenter,
-      color: Colors.lightGreenAccent,
+      color: Colors.white,
       margin: widget.margin,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
           Positioned(
-              bottom: progressBarPositionFromBottom,
-              left: 0,    /// 구속조건
-              right: 0,   /// 구속조건
-              child: _buildProgressBar(context)
+            bottom: progressBarPositionFromBottom,
+            left: 0,    /// 구속조건
+            right: 0,   /// 구속조건
+            child: _buildProgressBar(context)
           ),
           _buildStepLabels()
         ],
       ),
     );
-
-    // return Container(
-    //   alignment: Alignment.bottomCenter,
-    //   height: 32,
-    //   child: Stack(
-    //       children: [
-    //         Container(
-    //           width: double.infinity,
-    //           padding: const EdgeInsets.symmetric(horizontal: 4),
-    //           decoration: BoxDecoration(
-    //             borderRadius: BorderRadius.circular(999),
-    //             color: MColors.gray[100]!,
-    //           ),
-    //           child: Stack(
-    //               clipBehavior: Clip.none,
-    //               children: [
-    //                 LinearProgressIndicator(
-    //                   minHeight: 8,
-    //                   valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
-    //                   backgroundColor: Colors.transparent,
-    //                   value: colorsAndStepValue['progressBarValue'],
-    //                 ),
-    //                 Positioned.fill(
-    //                   top: -24,
-    //                   child: _buildMainStepCircles(),
-    //                 ),
-    //               ]
-    //           ),
-    //         ),
-    //         _buildHalfStepCircles()
-    //       ]
-    //   ),
-    // );
   }
 
-  _buildProgressBar(BuildContext context) {
+  Widget _buildProgressBar(BuildContext context) {
     return Stack(
       clipBehavior: Clip.none,
       children: [
@@ -124,14 +91,14 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
           ),
         ),
         Positioned.fill(
-            bottom: 0,
-            child: _buildHalfStepCircles()
+          bottom: 0,
+          child: _buildHalfStepCircles()
         )
       ],
     );
   }
 
-  _buildStepLabels() {
+  Row _buildStepLabels() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
@@ -156,7 +123,7 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
     );
   }
 
-  _buildMainStepCircle({required Color outerCircleColor}) {
+  Container _buildMainStepCircle({required Color outerCircleColor}) {
     return Container(       /// outer Circle
       alignment: Alignment.center,
       width: widget.outerCircleDiameter,
@@ -175,16 +142,6 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
       ),
     );
   }
-
-  // Column _buildStep({required String labelText}) {
-  //   return Column(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: [
-  //       _buildProgressLabel(labelText: labelText,),
-  //       _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
-  //     ],
-  //   );
-  // }
 
   Row _buildHalfStepCircles() {
     return Row(

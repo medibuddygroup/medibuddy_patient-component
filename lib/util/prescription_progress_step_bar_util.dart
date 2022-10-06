@@ -142,7 +142,7 @@ class PrescriptionProgressStepBarUtil {
       case "0.375":
       case "0.625":
       case "0.875":
-        regulatedValue += 0.01;
+        // regulatedValue += 0.01;
         break;
       default:
         break;
