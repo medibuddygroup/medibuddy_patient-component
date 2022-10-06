@@ -38,14 +38,12 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
   void initState() {
     // TODO: implement initState
     super.initState();
-    setState(() {
-      colorsAndStepValue = setColorsAndStepValue(
-        stepValueToString: widget.step,
-        isPrescriptionIssued: widget.isPrescriptionIssued,
-      );
-      progressBarPositionFromBottom =
-          (widget.outerCircleDiameter/2) - (widget.progressBarHeight/2);
-    });
+    colorsAndStepValue = setColorsAndStepValue(
+      stepValueToString: widget.step,
+      isPrescriptionIssued: widget.isPrescriptionIssued,
+    );
+    progressBarPositionFromBottom =
+        (widget.outerCircleDiameter/2) - (widget.progressBarHeight/2);
   }
 
   @override
