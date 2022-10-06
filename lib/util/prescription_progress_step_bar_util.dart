@@ -108,7 +108,7 @@ class PrescriptionProgressStepBarUtil {
         0.75: disabledHalfStepCircleColor,
         1: disabledHalfStepCircleColor,
       },
-      'progressBarValue' : progressBarValue,
+      'progressBarValue': progressBarValue,
     };
 
     for (double key in (colorsAndStepValue['stepLabel']!.keys)) {

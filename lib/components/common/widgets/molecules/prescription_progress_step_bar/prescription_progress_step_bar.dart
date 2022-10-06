@@ -7,12 +7,23 @@ import 'package:medibuddy_ui_kit/util/prescription_progress_step_bar_util.dart';
 class PrescriptionProgressStepBar extends StatefulWidget {
   final String step;
   final bool isPrescriptionIssued;
+  final EdgeInsets margin;
+  final double outerCircleDiameter;
+  final double innerCircleDiameter;
+  final double progressBarHeight;
 
+  /// 구속조건 : 메인 스텝 바깥 원 반지름 값 >= 프로그레스 바 높이 값
   const PrescriptionProgressStepBar({
     Key? key,
     required this.step,
     required this.isPrescriptionIssued,
-  }) : super(key: key);
+    this.margin = const EdgeInsets.all(16),
+    this.outerCircleDiameter = 16,
+    this.innerCircleDiameter = 8,
+    this.progressBarHeight = 8,
+  }) : assert(outerCircleDiameter/2 >= progressBarHeight,
+  "메인 스텝 바깥 원 반지름 값은 프로그레스 바 높이 값 보다 크거나 같아야 합니다.")
+  , super(key: key);
 
   @override
   _PrescriptionProgressStepBarState createState() => _PrescriptionProgressStepBarState();
@@ -21,6 +32,7 @@ class PrescriptionProgressStepBar extends StatefulWidget {
 class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBar> with PrescriptionProgressStepBarUtil {
 
   Map<String, dynamic> colorsAndStepValue = {};
+  double progressBarPositionFromBottom = 0;
 
   @override
   void initState() {
@@ -30,6 +42,8 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
       stepValueToString: widget.step,
       isPrescriptionIssued: widget.isPrescriptionIssued,
     );
+    progressBarPositionFromBottom =
+        (widget.outerCircleDiameter/2) - (widget.progressBarHeight/2);
   }
 
   @override
@@ -41,60 +55,136 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       alignment: Alignment.bottomCenter,
-      height: 32,
+      color: Colors.lightGreenAccent,
+      margin: widget.margin,
       child: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 4),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(999),
-                color: MColors.gray[100]!,
-              ),
-              child: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    LinearProgressIndicator(
-                      minHeight: 8,
-                      valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
-                      backgroundColor: Colors.transparent,
-                      value: colorsAndStepValue['progressBarValue'],
-                    ),
-                    Positioned.fill(
-                      top: -24,
-                      child: _buildMainStepCircles(),
-                    ),
-                  ]
-              ),
-            ),
-            _buildHalfStepCircles()
-          ]
+        clipBehavior: Clip.none,
+        children: [
+          Positioned(
+              bottom: progressBarPositionFromBottom,
+              left: 0,    /// 구속조건
+              right: 0,   /// 구속조건
+              child: _buildProgressBar(context)
+          ),
+          _buildStepLabels()
+        ],
+      ),
+    );
+
+    // return Container(
+    //   alignment: Alignment.bottomCenter,
+    //   height: 32,
+    //   child: Stack(
+    //       children: [
+    //         Container(
+    //           width: double.infinity,
+    //           padding: const EdgeInsets.symmetric(horizontal: 4),
+    //           decoration: BoxDecoration(
+    //             borderRadius: BorderRadius.circular(999),
+    //             color: MColors.gray[100]!,
+    //           ),
+    //           child: Stack(
+    //               clipBehavior: Clip.none,
+    //               children: [
+    //                 LinearProgressIndicator(
+    //                   minHeight: 8,
+    //                   valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
+    //                   backgroundColor: Colors.transparent,
+    //                   value: colorsAndStepValue['progressBarValue'],
+    //                 ),
+    //                 Positioned.fill(
+    //                   top: -24,
+    //                   child: _buildMainStepCircles(),
+    //                 ),
+    //               ]
+    //           ),
+    //         ),
+    //         _buildHalfStepCircles()
+    //       ]
+    //   ),
+    // );
+  }
+
+  _buildProgressBar(BuildContext context) {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: MediaQuery.of(context).size.width,
+          padding: EdgeInsets.symmetric(
+            horizontal: widget.progressBarHeight/2,
+          ),
+          child: LinearProgressIndicator(
+            minHeight: widget.progressBarHeight,
+            valueColor: AlwaysStoppedAnimation<Color>(MColors.blue[400]!),
+            backgroundColor: MColors.gray[100]!,
+            value: colorsAndStepValue['progressBarValue'],
+          ),
+        ),
+        Positioned.fill(
+            bottom: 0,
+            child: _buildHalfStepCircles()
+        )
+      ],
+    );
+  }
+
+  _buildStepLabels() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        _buildMainStep(labelText: "진료접수"),
+        _buildMainStep(labelText: "병원진료"),
+        _buildMainStep(labelText: "조제접수"),
+        _buildMainStep(labelText: "약 받기"),
+      ],
+    );
+  }
+
+  Column _buildMainStep({required String labelText}) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        _buildProgressLabel(labelText: labelText,),
+        _buildMainStepCircle(
+          outerCircleColor: colorsAndStepValue['mainStepCircle'][prescriptionLabelPosition[labelText]]
+        ),
+      ],
+    );
+  }
+
+  _buildMainStepCircle({required Color outerCircleColor}) {
+    return Container(       /// outer Circle
+      alignment: Alignment.center,
+      width: widget.outerCircleDiameter,
+      height: widget.outerCircleDiameter,
+      decoration: BoxDecoration(
+        color: outerCircleColor,
+        borderRadius: BorderRadius.circular(999),
+      ),
+      child: Container(     /// inner Circle
+        width: widget.innerCircleDiameter,
+        height: widget.innerCircleDiameter,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(999),
+        ),
       ),
     );
   }
 
-  Row _buildMainStepCircles() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _buildStep(labelText: "진료접수"),
-        _buildStep(labelText: "병원진료"),
-        _buildStep(labelText: "조제접수"),
-        _buildStep(labelText: "약 받기"),
-      ],
-    );
-  }
-
-  Column _buildStep({required String labelText}) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _buildProgressLabel(labelText: labelText,),
-        _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
-      ],
-    );
-  }
+  // Column _buildStep({required String labelText}) {
+  //   return Column(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       _buildProgressLabel(labelText: labelText,),
+  //       _buildCircleDot(color: colorsAndStepValue['mainStepCircle']![prescriptionLabelPosition[labelText]]!),
+  //     ],
+  //   );
+  // }
 
   Row _buildHalfStepCircles() {
     return Row(
@@ -108,10 +198,9 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
 
   Container _buildCircleDot({required Color color}) {
     return Container(
-      width: 8,
-      height: 8,
+      width: widget.progressBarHeight,
+      height: widget.progressBarHeight,
       decoration: BoxDecoration(
-        // color: enabled ?? MColors.blue[800]!,
         color: color,
         borderRadius: BorderRadius.circular(999),
       ),
@@ -119,12 +208,15 @@ class _PrescriptionProgressStepBarState extends State<PrescriptionProgressStepBa
   }
 
   Widget _buildProgressLabel({required String labelText,}) {
-    return Text(
-      labelText,
-      style: MTextStyles.bold[14]!.copyWith(
-        color: colorsAndStepValue['stepLabel']![prescriptionLabelPosition[labelText]],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: Text(
+        labelText,
+        style: MTextStyles.bold[14]!.copyWith(
+          color: colorsAndStepValue['stepLabel']![prescriptionLabelPosition[labelText]],
+        ),
+        // textAlign: TextAlign.center,
       ),
-      // textAlign: TextAlign.center,
     );
   }
 }
