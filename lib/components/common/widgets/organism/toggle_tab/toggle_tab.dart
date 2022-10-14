@@ -9,8 +9,9 @@ class ToggleTab extends StatefulWidget {
   final Widget leftTabContents;
   final Widget rightTabContents;
   final double tabContentsContainerHeight;
-  final double toggleTabHeight;
   final EdgeInsets margin;
+  final double toggleTabWidth;
+  final double toggleTabHeight;
 
   const ToggleTab({
     Key? key,
@@ -22,6 +23,7 @@ class ToggleTab extends StatefulWidget {
     required this.rightTabContents,
     required this.tabContentsContainerHeight,
     this.margin = const EdgeInsets.all(16),
+    this.toggleTabWidth = double.infinity,
     this.toggleTabHeight = 32,
   }) : super(key: key);
 
@@ -74,6 +76,7 @@ class _ToggleTabState extends State<ToggleTab> with TickerProviderStateMixin {
 
   Widget _buildToggleTab() {
     return Container(
+      width: widget.toggleTabWidth,
       decoration: BoxDecoration(
           color: MColors.gray[80]!,
           borderRadius: BorderRadius.circular(999)
