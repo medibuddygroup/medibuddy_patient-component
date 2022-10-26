@@ -5,7 +5,7 @@ class PrescriptionProgressStepBarUtil {
 
   final Color enabledLabelTextColor = MColors.gray[900]!;
   final Color disabledLabelTextColor = MColors.gray[400]!;
-  final Color enabledMainStepCircleColor = MColors.blue[800]!;
+  final Color enabledMainStepCircleColor = MColors.blue[400]!;
   final Color disabledMainStepCircleColor = MColors.gray[40]!;
   final Color enabledHalfStepCircleColor = MColors.blue[400]!;
   final Color disabledHalfStepCircleColor = MColors.gray[100]!;
@@ -30,6 +30,7 @@ class PrescriptionProgressStepBarUtil {
         else return 0.375;
       case PrescriptionStep.sendMedicineFee:    /// 찰나의 state.
       case PrescriptionStep.sendPrescriptionPaperFromPatientToPharm:
+      case PrescriptionStep.reissuePrescription:
       case PrescriptionStep.pharmacyPrescriptionReject:
       case PrescriptionStep.paymentErrorOnMedicineFee:
         return 0.625;
