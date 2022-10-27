@@ -5,12 +5,12 @@ import 'package:medibuddy_ui_kit/constants/text/m_text_styles.dart';
 
 class ButtonUtil {
 
-  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonColor color, {required bool isDisabled}) {
+  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonSize size, ButtonColor color, {required bool isDisabled}) {
     switch(type) {
       case ButtonType.outlined:
         return BoxDecoration(
           border: Border.all(color: _buttonBorderColorByColor(color, isDisabled)),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: size == ButtonSize.xs ? BorderRadius.circular(999) : BorderRadius.circular(8),
         );
       case ButtonType.singleDialogButton:
         return BoxDecoration(

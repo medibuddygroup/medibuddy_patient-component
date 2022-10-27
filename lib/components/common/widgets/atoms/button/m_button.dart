@@ -171,7 +171,7 @@ class MButton extends StatelessWidget with ButtonUtil {
       width: width ?? double.infinity,
       height: buttonHeightFromSize[size],
       margin: margin,
-      decoration: buttonDecorationByTypeAndColor(type, buttonColor, isDisabled: onPressed == null ? true : false),
+      decoration: buttonDecorationByTypeAndColor(type, size, buttonColor, isDisabled: onPressed == null ? true : false),
       child: TextButton(
         style: buttonStyleBySizeAndColor(type, size, buttonColor),
         onPressed: onPressed,
