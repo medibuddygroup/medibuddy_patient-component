@@ -75,7 +75,7 @@ class ButtonUtil {
       backgroundColor: MaterialStateProperty .resolveWith((states) => _buttonBackgroundColorByTypeAndColor(states, type, color)),
       overlayColor: MaterialStateProperty.all(_buttonSelectedColorByTypeAndColor(type, color)),
       shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(borderRadius: _buttonBorderRadiusByType(type))
+          RoundedRectangleBorder(borderRadius: _buttonBorderRadiusByType(type, size))
       ),
       /// 아래는 추후 쓰일 수 있음.
       // elevation: MaterialStateProperty.resolveWith((states) => 6),
@@ -155,7 +155,7 @@ class ButtonUtil {
     }
   }
 
-  BorderRadiusGeometry _buttonBorderRadiusByType(ButtonType type) {
+  BorderRadiusGeometry _buttonBorderRadiusByType(ButtonType type, ButtonSize size) {
     switch(type) {
       case ButtonType.singleDialogButton:
         return BorderRadius.only(
@@ -166,8 +166,9 @@ class ButtonUtil {
         return BorderRadius.only(bottomLeft: Radius.circular(8));
       case ButtonType.rightDialogButton:
         return BorderRadius.only(bottomRight: Radius.circular(8));
-      case ButtonType.solid:
       case ButtonType.outlined:
+        return size == ButtonSize.xs ? BorderRadius.circular(999) : BorderRadius.circular(8);
+      case ButtonType.solid:
       case ButtonType.text:
       default:
         return BorderRadius.circular(8);
