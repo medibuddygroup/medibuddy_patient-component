@@ -1,7 +1,10 @@
 class DateTimeConverterUtil {
 
   /// This function was created by Paul.
-  /// 2022-10-20 15:30:20
+  ///
+  /// start param format : 2022-10-31 11:26:18.017 (DateTime.now() 사용 시 나오는 포맷.)
+  ///
+  /// end param format : 2022-10-31 11:26:18
   String convertDateTimeToMinutesAgo(DateTime start, DateTime end) {
     Duration difference = start.difference(end);
     int differenceDay = difference.inDays;
