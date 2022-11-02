@@ -6,7 +6,7 @@ class PrescriptionProgressStepBarUtil {
   final Color enabledLabelTextColor = MColors.gray[900]!;
   final Color disabledLabelTextColor = MColors.gray[400]!;
   final Color enabledMainStepCircleColor = MColors.blue[400]!;
-  final Color disabledMainStepCircleColor = MColors.gray[40]!;
+  final Color disabledMainStepCircleColor = MColors.gray[100]!;
   final Color enabledHalfStepCircleColor = MColors.blue[400]!;
   final Color disabledHalfStepCircleColor = MColors.gray[100]!;
 
