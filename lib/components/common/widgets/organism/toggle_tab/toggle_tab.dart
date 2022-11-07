@@ -9,9 +9,10 @@ class ToggleTab extends StatefulWidget {
   final Widget leftTabContents;
   final Widget rightTabContents;
   final double tabContentsContainerHeight;
-  final EdgeInsets margin;
+  final EdgeInsets? outerMargin;
   final double toggleTabWidth;
   final double toggleTabHeight;
+  final EdgeInsets? toggleTabMargin;
 
   const ToggleTab({
     Key? key,
@@ -22,9 +23,10 @@ class ToggleTab extends StatefulWidget {
     required this.leftTabContents,
     required this.rightTabContents,
     required this.tabContentsContainerHeight,
-    this.margin = const EdgeInsets.all(16),
+    this.outerMargin,
     this.toggleTabWidth = double.infinity,
     this.toggleTabHeight = 32,
+    this.toggleTabMargin,
   }) : super(key: key);
 
   @override
@@ -64,7 +66,7 @@ class _ToggleTabState extends State<ToggleTab> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: widget.margin,
+      margin: widget.outerMargin,
       child: Column(
         children: [
           _buildToggleTab(),
@@ -77,6 +79,7 @@ class _ToggleTabState extends State<ToggleTab> with TickerProviderStateMixin {
   Widget _buildToggleTab() {
     return Container(
       width: widget.toggleTabWidth,
+      margin: widget.toggleTabMargin,
       decoration: BoxDecoration(
           color: MColors.gray[80]!,
           borderRadius: BorderRadius.circular(999)
@@ -100,19 +103,19 @@ class _ToggleTabState extends State<ToggleTab> with TickerProviderStateMixin {
           Container(
             height: widget.toggleTabHeight,
             alignment: Alignment.center,
+            padding: const EdgeInsets.only(top: 2), /// 디자인 피드백 반영 (11.4)
             child: Text(
               widget.leftTabText,
               style: selectedStatus[0] ? widget.selectedTabTextStyle : widget.unselectedTabTextStyle,
-              // style: _tabController.previousIndex == 1 ? widget.selectedTextStyle : widget.unselectedTextStyle,
             ),
           ),
           Container(
             height: widget.toggleTabHeight,
             alignment: Alignment.center,
+            padding: const EdgeInsets.only(top: 2), /// 디자인 피드백 반영 (11.4)
             child: Text(
               widget.rightTabText,
               style: selectedStatus[1] ? widget.selectedTabTextStyle : widget.unselectedTabTextStyle,
-              // style: _tabController.previousIndex == 0 ? widget.selectedTextStyle : widget.unselectedTextStyle
             ),
           ),
         ],
