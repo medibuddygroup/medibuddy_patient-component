@@ -72,6 +72,22 @@ class MColors {
     900: const Color(0xFF004D40),
   });
 
+  static const deepBlue = MaterialColor(
+    0xFF3C71C7,
+    {
+      50: const Color(0xFFD9EAFF),
+      100: const Color(0xFFB8D3F5),
+      200: const Color(0xFF81AFEB),
+      300: const Color(0xFF4F8BE0),
+      400: const Color(0xFF3C71C7),
+      500: const Color(0xFF2B5BAD),
+      600: const Color(0xFF1E4794),
+      700: const Color(0xFF12357A),
+      800: const Color(0xFF0A2561),
+      900: const Color(0xFF041847),
+    },
+  );
+
   static final controlBorder = MColors.gray[200];
   static final itemBorder = MColors.gray[80];
   static final bgColor = MColors.gray[40];
