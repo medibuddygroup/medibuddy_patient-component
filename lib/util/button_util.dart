@@ -5,20 +5,16 @@ import 'package:medibuddy_ui_kit/constants/text/m_text_styles.dart';
 
 class ButtonUtil {
 
-  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonColor color, {required bool isDisabled}) {
+  Decoration? buttonDecorationByTypeAndColor(ButtonType type, ButtonSize size, ButtonColor color, {required bool isDisabled}) {
     switch(type) {
       case ButtonType.outlined:
         return BoxDecoration(
           border: Border.all(color: _buttonBorderColorByColor(color, isDisabled)),
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: size == ButtonSize.xs ? BorderRadius.circular(999) : BorderRadius.circular(8),
         );
       case ButtonType.singleDialogButton:
         return BoxDecoration(
           border: Border(top: BorderSide(color: MColors.gray[80]!)),
-          // borderRadius: BorderRadius.only(
-          //   bottomRight: Radius.circular(8),
-          //   bottomLeft: Radius.circular(8)
-          // ),
         );
       case ButtonType.leftDialogButton:
         return BoxDecoration(
@@ -26,12 +22,10 @@ class ButtonUtil {
             top: BorderSide(color: MColors.gray[80]!),
             right: BorderSide(color: MColors.gray[80]!),
           ),
-          // borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
         );
       case ButtonType.rightDialogButton:
         return BoxDecoration(
           border: Border(top: BorderSide(color: MColors.gray[80]!)),
-          // borderRadius: BorderRadius.only(bottomRight: Radius.circular(8)),
         );
       case ButtonType.solid:
       case ButtonType.text:
@@ -47,41 +41,41 @@ class ButtonUtil {
             ? MTextStyles.black[21]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
             ? MTextStyles.bold[21]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
-            : MTextStyles.bold[21]!.copyWith(color: MColors.gray[600]!);
+            : MTextStyles.bold[18]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled));
       case ButtonSize.l:
         return type == ButtonType.solid
             ? MTextStyles.black[18]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
             ? MTextStyles.bold[18]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
-            : MTextStyles.bold[18]!.copyWith(color: MColors.gray[600]!);
+            : MTextStyles.bold[16]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled));
       case ButtonSize.m:
         return type == ButtonType.solid
             ? MTextStyles.black[16]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
             ? MTextStyles.bold[16]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
-            : MTextStyles.bold[16]!.copyWith(color: MColors.gray[600]!);
+            : MTextStyles.bold[14]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled));
       case ButtonSize.s:
         return type == ButtonType.solid
             ? MTextStyles.black[14]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
             ? MTextStyles.bold[14]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
-            : MTextStyles.bold[14]!.copyWith(color: MColors.gray[600]!);
+            : MTextStyles.bold[12]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled));
       case ButtonSize.xs:
         return type == ButtonType.solid
             ? MTextStyles.black[12]!.copyWith(color: Colors.white)
             : (type == ButtonType.outlined || type == ButtonType.text)
             ? MTextStyles.bold[12]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled))
-            : MTextStyles.bold[12]!.copyWith(color: MColors.gray[600]!);
+            : MTextStyles.bold[12]!.copyWith(color: _buttonTextColorByTypeAndColor(type, color, isDisabled), fontSize: 10);
     }
   }
 
   ButtonStyle buttonStyleBySizeAndColor(ButtonType type, ButtonSize size, ButtonColor color) {
     return ButtonStyle(
       padding: MaterialStateProperty.all(_buttonPaddingBySize(size)),
-      backgroundColor: MaterialStateProperty.resolveWith((states) => _buttonBackgroundColorByTypeAndColor(states, type, color)),
+      backgroundColor: MaterialStateProperty .resolveWith((states) => _buttonBackgroundColorByTypeAndColor(states, type, color)),
       overlayColor: MaterialStateProperty.all(_buttonSelectedColorByTypeAndColor(type, color)),
       shape: MaterialStateProperty.all(
-          RoundedRectangleBorder(borderRadius: _buttonBorderRadiusByType(type))
+          RoundedRectangleBorder(borderRadius: _buttonBorderRadiusByType(type, size))
       ),
       /// 아래는 추후 쓰일 수 있음.
       // elevation: MaterialStateProperty.resolveWith((states) => 6),
@@ -154,14 +148,14 @@ class ButtonUtil {
       case ButtonType.singleDialogButton:
       case ButtonType.leftDialogButton:
       case ButtonType.rightDialogButton:
-        return MColors.gray[60]!;
+        return MColors.gray[40]!;
       case ButtonType.text:
       default:
         return Colors.transparent;
     }
   }
 
-  BorderRadiusGeometry _buttonBorderRadiusByType(ButtonType type) {
+  BorderRadiusGeometry _buttonBorderRadiusByType(ButtonType type, ButtonSize size) {
     switch(type) {
       case ButtonType.singleDialogButton:
         return BorderRadius.only(
@@ -172,8 +166,9 @@ class ButtonUtil {
         return BorderRadius.only(bottomLeft: Radius.circular(8));
       case ButtonType.rightDialogButton:
         return BorderRadius.only(bottomRight: Radius.circular(8));
-      case ButtonType.solid:
       case ButtonType.outlined:
+        return size == ButtonSize.xs ? BorderRadius.circular(999) : BorderRadius.circular(8);
+      case ButtonType.solid:
       case ButtonType.text:
       default:
         return BorderRadius.circular(8);
@@ -184,6 +179,9 @@ class ButtonUtil {
     switch(type) {
       case ButtonType.outlined:
       case ButtonType.text:
+      case ButtonType.singleDialogButton:
+      case ButtonType.leftDialogButton:
+      case ButtonType.rightDialogButton:
         if(isDisabled) return MColors.gray[80]!;
         else
           return color == ButtonColor.blue

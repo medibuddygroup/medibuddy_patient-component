@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medibuddy_ui_kit/constants/m_colors.dart';
 
-class MDotBadge extends StatelessWidget {
+class DotBadge extends StatelessWidget {
   final double? size;
   final Color? badgeColor;
 
-  const MDotBadge({
+  const DotBadge({
     Key? key,
     this.size = 6,
     this.badgeColor,

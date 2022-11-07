@@ -104,6 +104,11 @@ class MTextStyles {
         letterSpacing: 32 * -0.01),
   };
   static const Map<int, TextStyle> bold = {
+    10: const TextStyle(
+        fontWeight: FontWeight.w700,
+        fontSize: 10,
+        // height: 1.8,
+        letterSpacing: 12 * 0.02),
     12: const TextStyle(
         fontWeight: FontWeight.w700,
         fontSize: 12,
